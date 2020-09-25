@@ -18,9 +18,12 @@ class ServersController extends Controller
     {
         $sshSession = $server->ssh();
 
-        return Inertia::render('Router/Show', [
+        return Inertia::render('Servers/Show', [
             'diskUsages' => $sshSession->diskUsages(),
-            'files' => $sshSession->files('/root'),
+            'files' => [
+                'path' => '/root',
+                'files' => $sshSession->files('/root')
+            ],
         ]);
     }
 }

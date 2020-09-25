@@ -39,21 +39,36 @@ class SSH
 
         stream_set_blocking($stream, true);
 
-        return stream_get_contents(ssh2_fetch_stream($stream, SSH2_STREAM_STDIO));
+        return ssh2_fetch_stream($stream, SSH2_STREAM_STDIO);
     }
 
     public function diskUsages()
     {
-        return $this->run('df -h');
+        return $this->toArray(
+            $this->run('df -h')
+        );
     }
 
     public function files($path)
     {
-        return $this->run("cd $path && ls -la");
+        return $this->toArray(
+            $this->run("cd $path && ls -la")
+        );
     }
 
     public function restartNginx($path)
     {
         return $this->run('systemctl status nginx');
+    }
+
+    public function toArray($stream)
+    {
+        $output = [];
+
+        while ($line = fgets($stream)) {
+            $output[] = $line;
+        }
+
+        return $output;
     }
 }

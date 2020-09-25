@@ -9,17 +9,17 @@
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div class="bg-white rounded-md p-4 mb-10">
-                    <h1>
-                        Disk Usages:
-                    </h1>
-                    {{ diskUsages }}
+                    <h1>Disk Usages:</h1>
+                    <p v-for="(disk, index) in diskUsages" :key="index">
+                        {{ disk }}
+                    </p>
                 </div>
-                
+
                 <div class="bg-white rounded-md p-4">
-                    <h1>
-                        Files:
-                    </h1>
-                    {{ files }}
+                    <h1>File Path: {{ files.path }} </h1>
+                    <p v-for="(file, index) in files.files" :key="index">
+                        {{ file }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -37,9 +37,7 @@ export default {
     },
 
     data() {
-        return {
-            
-        }
+        return {};
     },
 };
 </script>
